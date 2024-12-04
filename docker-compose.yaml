@@ -3,22 +3,22 @@ networks:
   homelibnetwork:
     driver: bridge
 services:
-  app:
-    restart: always
-    build:
-      context: .
-    ports:
-      - ${PORT}:${PORT}
-    depends_on:
-      - postgres
-    env_file:
-      - .env
-    networks:
-      homelibnetwork:
-    volumes:
-      - ./:/user/app
-      - /usr/app/node_modules
-    command: [ "npm", "run", "migrate:start:dev" ]
+#  app:
+#    restart: always
+#    build:
+#      context: .
+#    ports:
+#      - ${PORT}:${PORT}
+#    depends_on:
+#      - postgres
+#    env_file:
+#      - .env
+#    networks:
+#      homelibnetwork:
+#    volumes:
+#      - ./:/user/app
+#      - /usr/app/node_modules
+#    command: [ "npm", "run", "migrate:start:dev" ]
 
   postgres:
     image: postgres:13.5

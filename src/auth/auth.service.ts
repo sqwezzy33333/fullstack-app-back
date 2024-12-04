@@ -1,8 +1,9 @@
-import {Injectable, NotFoundException} from '@nestjs/common';
-import {UserLoginDto, UserRegisterDto} from "./interfaces";
+import {Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import {UserFromToken, UserLoginDto, UserRegisterDto} from "./interfaces";
 import {PrismaService} from "../prisma/prisma.service";
 import {User} from "@prisma/client";
-import { JwtService } from '@nestjs/jwt';
+import {JwtService} from '@nestjs/jwt';
+import * as process from "node:process";
 
 @Injectable()
 export class AuthService {
