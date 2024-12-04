@@ -41,3 +41,26 @@ export interface UserFromToken {
     iat: number,
     exp: number
 }
+
+export class TokenResponse {
+    @ApiProperty({
+        default: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InNxd2V6enkiLCJ1c2VySWQiOjEsImlhdCI6MTczMzMwMTA1NiwiZXhwIjoxNzMzMzA0NjU2fQ.5CYxmmccAOkcXhyfD0gbeYTjYPo9ybwKbQZbgMluATs'
+    })
+    accessToken: string;
+
+    @ApiProperty({
+        default: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InNxd2V6enkiLCJ1c2VySWQiOjEsImlhdCI6MTczMzMwMTA1NiwiZXhwIjoxNzMzMzA0NjU2fQ.5CYxmmccAOkcXhyfD0gbeYTjYPo9ybwKbQZbgMluATs'
+    })
+    refreshToken: string;
+}
+
+export class RefreshTokenDto {
+    @ApiProperty(
+        {
+            default: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InNxd2V6enkiLCJ1c2VySWQiOjEsImlhdCI6MTczMzMwMTA1NiwiZXhwIjoxNzMzMzA0NjU2fQ.5CYxmmccAOkcXhyfD0gbeYTjYPo9ybwKbQZbgMluATs',
+        }
+    )
+    @IsString()
+    @IsNotEmpty()
+    refreshToken: string;
+}
