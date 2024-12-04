@@ -18,6 +18,7 @@ CREATE TABLE "Task" (
     "date" TIMESTAMP(3) NOT NULL,
     "creatorId" INTEGER NOT NULL,
     "assigneeId" INTEGER,
+    "status" INTEGER,
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
 );
@@ -39,3 +40,6 @@ ALTER TABLE "Task" ADD CONSTRAINT "Task_creatorId_fkey" FOREIGN KEY ("creatorId"
 
 -- AddForeignKey
 ALTER TABLE "Task" ADD CONSTRAINT "Task_assigneeId_fkey" FOREIGN KEY ("assigneeId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Task" ADD CONSTRAINT "Task_status_fkey" FOREIGN KEY ("status") REFERENCES "Status"("id") ON DELETE SET NULL ON UPDATE CASCADE;

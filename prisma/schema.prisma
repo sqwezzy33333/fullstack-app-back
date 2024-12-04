@@ -18,19 +18,22 @@ model User {
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  createdAt   DateTime @default(now())
-  date        DateTime
-  creator     User     @relation(name: "creator", fields: [creatorId], references: [id])
-  creatorId   Int
-  assignee    User?    @relation(name: "assignee", fields: [assigneeId], references: [id])
-  assigneeId  Int?
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String
+  createdAt      DateTime @default(now())
+  date           DateTime
+  creator        User     @relation(name: "creator", fields: [creatorId], references: [id])
+  creatorId      Int
+  assignee       User?    @relation(name: "assignee", fields: [assigneeId], references: [id])
+  assigneeId     Int?
+  selectedStatus Status?  @relation(fields: [status], references: [id])
+  status         Int?
 }
 
 model Status {
   id    Int    @id @default(autoincrement())
   name  String
   color String
+  Task  Task[]
 }
