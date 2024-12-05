@@ -3,35 +3,35 @@ import {IsArray, IsNotEmpty, IsNumber, IsString} from "class-validator";
 
 export class UserLoginDto {
     @ApiProperty()
-    @IsString({message: 'Логин должен быть строкой'})
-    @IsNotEmpty({message: 'Поле не должно быть пустым'})
+    @IsString({message: 'login|Логин должен быть строкой'})
+    @IsNotEmpty({message: 'login|Поле не должно быть пустым'})
     login: string;
 
     @ApiProperty()
-    @IsString({message: 'Пароль должен быть строкой', context: { field: 'password' }},)
-    @IsNotEmpty({message: 'Поле не должно быть пустым', context: { field: 'password' }})
+    @IsString({message: 'passwordПароль должен быть строкой'},)
+    @IsNotEmpty({message: 'password|Поле не должно быть пустым'})
     password: string;
 }
 
 export class UserRegisterDto {
     @ApiProperty()
-    @IsString({message: 'Логин должен быть строкой'})
-    @IsNotEmpty({message: 'Поле не должно быть пустым'})
+    @IsString({message: 'login|Логин должен быть строкой'})
+    @IsNotEmpty({message: 'login|Поле не должно быть пустым'})
     login: string;
 
     @ApiProperty()
-    @IsString({message: 'Пароль должен быть строкой'})
-    @IsNotEmpty({message: 'Поле не должно быть пустым'})
+    @IsString({message: 'password|Пароль должен быть строкой'})
+    @IsNotEmpty({message: 'password|Поле не должно быть пустым'})
     password: string;
 
     @ApiProperty()
-    @IsString({message: 'Имя должно быть строкой'})
-    @IsNotEmpty({message: 'Поле не должно быть пустым'})
+    @IsString({message: 'forName|Имя должно быть строкой'})
+    @IsNotEmpty({message: 'forName|Поле не должно быть пустым'})
     forName: string;
 
     @ApiProperty()
-    @IsString({message: 'Фамилия должена быть строкой'})
-    @IsNotEmpty({message: 'Поле не должно быть пустым'})
+    @IsString({message: 'lastName|Фамилия должена быть строкой'})
+    @IsNotEmpty({message: 'lastName|Поле не должно быть пустым'})
     lastName: string;
 }
 

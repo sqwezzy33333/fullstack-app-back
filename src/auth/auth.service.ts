@@ -1,4 +1,10 @@
-import {ForbiddenException, Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import {
+    BadRequestException,
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+    UnauthorizedException
+} from '@nestjs/common';
 import {RefreshTokenDto, TokenResponse, UserFromToken, UserLoginDto, UserRegisterDto} from "./interfaces";
 import {PrismaService} from "../prisma/prisma.service";
 import {User} from "@prisma/client";
@@ -32,7 +38,9 @@ export class AuthService {
     async register(data: UserRegisterDto) {
         const exist = await this.prismaService.user.findFirst({where: {login: data.login}});
         if(exist) {
-            throw new ForbiddenException('Пользователь с логином ' + data.login + ' уже существует')
+            throw new BadRequestException({
+                message: ['login|Пользователь с логином ' + data.login + ' уже существует']
+            })
         }
         const user: User = await this.prismaService.user.create({
             data

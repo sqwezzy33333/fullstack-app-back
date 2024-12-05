@@ -5,6 +5,6 @@ import {ValidatorOptions} from "@nestjs/common/interfaces/external/validator-opt
 export class CustomValidationPipe extends ValidationPipe {
 
     async validate(object: object, validatorOptions?: ValidatorOptions) {
-        return super.validate(object, {stopAtFirstError: true});
+        return super.validate(object);
     }
 }
