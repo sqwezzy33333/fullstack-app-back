@@ -30,6 +30,10 @@ export class AuthService {
     }
 
     async register(data: UserRegisterDto) {
+        const exist = await this.prismaService.user.findFirst({where: {login: data.login}});
+        if(exist) {
+            throw new ForbiddenException('Пользователь с логином ' + data.login + ' уже существует')
+        }
         const user: User = await this.prismaService.user.create({
             data
         })
