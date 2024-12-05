@@ -8,8 +8,8 @@ export class UserLoginDto {
     login: string;
 
     @ApiProperty()
-    @IsString({message: 'Пароль должен быть строкой'})
-    @IsNotEmpty({message: 'Поле не должно быть пустым'})
+    @IsString({message: 'Пароль должен быть строкой', context: { field: 'password' }},)
+    @IsNotEmpty({message: 'Поле не должно быть пустым', context: { field: 'password' }})
     password: string;
 }
 
