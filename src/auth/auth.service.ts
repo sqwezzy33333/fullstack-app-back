@@ -23,7 +23,6 @@ import {exclude} from "../utils";
 export class AuthService {
     async login(body: UserLoginDto): Promise<TokenResponse> {
         const user = await this.prismaService.user.findFirst({where: {login: body.login}});
-
         if (!user) {
             throw new NotFoundException("Пользователь не найден");
         }
@@ -95,7 +94,7 @@ export class AuthService {
         try {
             const token = request.headers['authorization'].replace('Bearer ', '').trim();
             const payload = await this.jwtService.verifyAsync(token);
-            const user = await this.prismaService.user.findFirst({where: {id: payload.id}});
+            const user = await this.prismaService.user.findFirst({where: {id: payload.userId}});
             if (!user) {
                 throw new NotFoundException("User Not Found");
             }
