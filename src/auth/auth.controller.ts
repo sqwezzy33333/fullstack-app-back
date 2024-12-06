@@ -1,5 +1,5 @@
 import {Body, Controller, Get, HttpCode, Post, Req, ValidationPipe} from '@nestjs/common';
-import {RefreshTokenDto, TokenResponse, UserLoginDto, UserRegisterDto} from "./interfaces";
+import {ChangePassDto, RefreshTokenDto, TokenResponse, UserLoginDto, UserRegisterDto} from "./interfaces";
 import {AuthService} from "./auth.service";
 import {ApiOkResponse} from "@nestjs/swagger";
 import {UserResponseBody} from "../user/models";
@@ -27,6 +27,12 @@ export class AuthController {
         return this.authService.refreshToken(refresh);
     }
 
+
+    @Post('changePass')
+    @HttpCode(200)
+    changePass(@Body() changePassDto: ChangePassDto, @Req() request: Request) {
+        return this.authService.changePass(changePassDto, request);
+    }
 
     constructor(
         private authService: AuthService,

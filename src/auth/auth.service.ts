@@ -5,7 +5,14 @@ import {
     NotFoundException,
     UnauthorizedException
 } from '@nestjs/common';
-import {RefreshTokenDto, TokenResponse, UserFromToken, UserLoginDto, UserRegisterDto} from "./interfaces";
+import {
+    ChangePassDto,
+    RefreshTokenDto,
+    TokenResponse,
+    UserFromToken,
+    UserLoginDto,
+    UserRegisterDto
+} from "./interfaces";
 import {PrismaService} from "../prisma/prisma.service";
 import {User} from "@prisma/client";
 import {JwtService} from '@nestjs/jwt';
@@ -18,14 +25,17 @@ export class AuthService {
         const user = await this.prismaService.user.findFirst({where: {login: body.login}});
 
         if (!user) {
-            throw new NotFoundException("User Not Found");
+            throw new NotFoundException("Пользователь не найден");
+        }
+
+        if (user.password !== body.password) {
+            throw new BadRequestException(["password|Неверный пароль"])
         }
 
         const payload = {
             login: user.login,
             userId: user.id
         }
-
         return {
             accessToken: this.jwtService.sign(payload),
             refreshToken: this.jwtService.sign(payload, {
@@ -37,7 +47,7 @@ export class AuthService {
 
     async register(data: UserRegisterDto) {
         const exist = await this.prismaService.user.findFirst({where: {login: data.login}});
-        if(exist) {
+        if (exist) {
             throw new BadRequestException({
                 message: ['login|Пользователь с логином ' + data.login + ' уже существует']
             })
@@ -79,6 +89,32 @@ export class AuthService {
             );
         }
 
+    }
+
+    async changePass(body: ChangePassDto, request: Request) {
+        try {
+            const token = request.headers['authorization'].replace('Bearer ', '').trim();
+            const payload = await this.jwtService.verifyAsync(token);
+            const user = await this.prismaService.user.findFirst({where: {id: payload.id}});
+            if (!user) {
+                throw new NotFoundException("User Not Found");
+            }
+
+            if (body.oldPassword !== user.password) {
+                throw new BadRequestException(['oldPassword|Неверный пароль'])
+            }
+
+            const result = await this.prismaService.user.update({
+                where: {id: user.id},
+                data: {password: body.newPassword}
+            });
+            return exclude(result, ['password']);
+        } catch (error) {
+            if (error instanceof NotFoundException || error instanceof BadRequestException) {
+                throw error
+            }
+            throw new UnauthorizedException("Token is invalid");
+        }
     }
 
     constructor(

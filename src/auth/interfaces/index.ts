@@ -64,3 +64,13 @@ export class RefreshTokenDto {
     @IsNotEmpty()
     refreshToken: string;
 }
+
+export class ChangePassDto {
+    @ApiProperty()
+    @IsString({ message: "old_password|Пароль должен быть строкой" })
+    oldPassword: string;
+
+    @ApiProperty()
+    @IsString({ message: "new_password|Пароль должен быть строкой" })
+    newPassword: string;
+}

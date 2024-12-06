@@ -11,9 +11,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const exceptionResponse = exception.getResponse();
         let additionalMessage: ValidationError[] = [];
         if (typeof exceptionResponse === 'object') {
-            console.log(exceptionResponse);
-            const errorMessage = exceptionResponse['message'] as string[];
-            if (status === 400) {
+            const errorMessage: string | string[] = exceptionResponse['message'];
+            if (status === 400 && Array.isArray(errorMessage)) {
                 additionalMessage = this.mapValidateError(errorMessage);
             }
         }

@@ -1,7 +1,6 @@
 import {Injectable, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {exclude} from "../utils";
-import {UserFromToken} from "../auth/interfaces";
 
 @Injectable()
 export class UserService {
@@ -11,11 +10,14 @@ export class UserService {
     }
 
     async getMe(request: Request) {
-        const id = request['user']['id'];
+        const id = request['user']['userId'];
+        if (!id) {
+            throw new NotFoundException("Пользователь не найден");
+        }
         const userFromDb = await this.prismaService.user.findFirst({where: {id}});
 
         if (!userFromDb) {
-            throw new NotFoundException("User Not Found");
+            throw new NotFoundException("Пользователь не найден");
         }
         return exclude(userFromDb, ['password']);
     }
